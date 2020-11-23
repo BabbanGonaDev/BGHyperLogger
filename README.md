@@ -1,0 +1,2 @@
+# BGHyperLogger
+Error Reporting Module
