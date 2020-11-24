@@ -10,6 +10,7 @@ public class DatabaseStringConstants {
 
 
     public static final String LOG_TABLE                        = "log_table";
+    public static final String GENERAL_LOG_TABLE                        = "general_log_table";
 
     /**
      * log_table particulars
@@ -24,4 +25,5 @@ public class DatabaseStringConstants {
     public static final String COL_APPLICATION_NAME             = "application_name";
     public static final String COL_APPLICATION_VERSION          = "application_version";
     public static final String COL_TIME_STAMP                   = "time_stamp";
+    public static final String COL_SYNC_FLAG                    = "sync_flag";
 }

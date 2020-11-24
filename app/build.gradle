@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
 }
 
 android {
@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.hyperlogger"
+        //applicationId "com.example.hyperlogger"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1

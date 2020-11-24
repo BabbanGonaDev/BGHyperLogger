@@ -7,13 +7,14 @@ import androidx.room.Entity;
 
 import com.example.hyperlogger.Database.DatabaseStringConstants;
 
+
 @Entity(primaryKeys = {DatabaseStringConstants.COL_LOG_ID},
         tableName = DatabaseStringConstants.LOG_TABLE)
 public class HyperLoggerTable {
 
     @ColumnInfo(name = DatabaseStringConstants.COL_LOG_ID)
     @NonNull
-    private String activity_id;
+    private String log_id;
 
     @ColumnInfo(name = DatabaseStringConstants.COL_LOG_TYPE)
     @NonNull
@@ -43,10 +44,14 @@ public class HyperLoggerTable {
     @ColumnInfo(name = DatabaseStringConstants.COL_TIME_STAMP)
     private String time_stamp;
 
-    public HyperLoggerTable(@NonNull String activity_id, @NonNull String log_type, String log_message,
+
+    @ColumnInfo(name = DatabaseStringConstants.COL_SYNC_FLAG)
+    private String sync_flag;
+
+    public HyperLoggerTable(@NonNull String log_id, @NonNull String log_type, String log_message,
                             String tag, String phone_name, String imei, String staff_id, String application_name,
-                            String application_version, String time_stamp) {
-        this.activity_id = activity_id;
+                            String application_version, String time_stamp, String sync_flag) {
+        this.log_id = log_id;
         this.log_type = log_type;
         this.log_message = log_message;
         this.tag = tag;
@@ -56,15 +61,17 @@ public class HyperLoggerTable {
         this.application_name = application_name;
         this.application_version = application_version;
         this.time_stamp = time_stamp;
+        this.sync_flag = sync_flag;
     }
+
 
     @NonNull
-    public String getActivity_id() {
-        return activity_id;
+    public String getLog_id() {
+        return log_id;
     }
 
-    public void setActivity_id(@NonNull String activity_id) {
-        this.activity_id = activity_id;
+    public void setLog_id(@NonNull String log_id) {
+        this.log_id = log_id;
     }
 
     @NonNull
@@ -138,5 +145,13 @@ public class HyperLoggerTable {
 
     public void setTime_stamp(String time_stamp) {
         this.time_stamp = time_stamp;
+    }
+
+    public String getSync_flag() {
+        return sync_flag;
+    }
+
+    public void setSync_flag(String sync_flag) {
+        this.sync_flag = sync_flag;
     }
 }
