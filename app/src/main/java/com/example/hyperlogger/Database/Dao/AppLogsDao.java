@@ -22,6 +22,17 @@ public interface AppLogsDao {
     @Query(" SELECT COUNT(*) FROM "+ DatabaseStringConstants.GENERAL_LOG_TABLE +" ")
     String  countActivities();
 
+    @Query(" SELECT * FROM "+ DatabaseStringConstants.GENERAL_LOG_TABLE +" where sync_flag != '1' ")
+    List<AppLogs>  getUnsyncedLogs();
+
+    @Query(" SELECT * FROM "+ DatabaseStringConstants.GENERAL_LOG_TABLE +" ")
+    List<AppLogs>  getAllRecords();
+
+
+    @Query(" update "+ DatabaseStringConstants.GENERAL_LOG_TABLE +" set sync_flag = '1'  where log_id = :log_id ")
+    String  updateSyncFlag(String log_id);
+
+
 
     /**
      * Insert the object in database

@@ -9,10 +9,15 @@ public interface LogRecordsHelper {
                                    String imei, String staff_id, String application_name, String application_version,
                                    String time_stamp);
 
-    public String captureLogs(Context context,String log_type, String log_message, String date);
+    public String captureLogs(Context context,String log_type, String log_message);
 
     public String getLogs(Context context);
 
+    public void setBaseURL(Context context,String url, String script);
+
+    public void triggerSync(Context context, int flag);
+
+    public void writeToFile(Context context, int flag);
 
 
 
