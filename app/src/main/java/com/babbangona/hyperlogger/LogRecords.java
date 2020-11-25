@@ -4,10 +4,15 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+
 import com.babbangona.hyperlogger.Database.AppDatabase;
 import com.babbangona.hyperlogger.Database.Entities.AppLogs;
 import com.babbangona.hyperlogger.Database.Entities.HyperLoggerTable;
 import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
+import com.babbangona.hyperlogger.Network.PeriodicWorker;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 
 //this model class implements the functions in the interface class
@@ -131,6 +137,16 @@ public class LogRecords implements LogRecordsHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void startAutoSyncClass(Context context){
+        WorkManager workManager = WorkManager.getInstance(context);
+
+        WorkRequest callDataRequest = new PeriodicWorkRequest.Builder(PeriodicWorker.class,
+                30, TimeUnit.MINUTES, 5, TimeUnit.MINUTES)
+                .build();
+        workManager.enqueue(callDataRequest);
     }
 
 }

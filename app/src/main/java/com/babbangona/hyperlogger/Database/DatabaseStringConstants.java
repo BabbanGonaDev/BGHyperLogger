@@ -10,7 +10,7 @@ public class DatabaseStringConstants {
 
 
     public static final String LOG_TABLE                        = "log_table";
-    public static final String GENERAL_LOG_TABLE                        = "general_log_table";
+    public static final String GENERAL_LOG_TABLE                = "general_log_table";
 
     /**
      * log_table particulars

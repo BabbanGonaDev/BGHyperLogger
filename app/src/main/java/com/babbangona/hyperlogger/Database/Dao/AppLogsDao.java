@@ -30,7 +30,7 @@ public interface AppLogsDao {
 
 
     @Query(" update "+ DatabaseStringConstants.GENERAL_LOG_TABLE +" set sync_flag = '1'  where log_id = :log_id ")
-    String  updateSyncFlag(String log_id);
+    void updateSyncFlag(String log_id);
 
 
 

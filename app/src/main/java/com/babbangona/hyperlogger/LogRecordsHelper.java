@@ -35,6 +35,12 @@ public interface LogRecordsHelper {
      * */
     public void writeToFile(Context context, int flag);
 
+    /**
+     * this controls starting the auto sync class
+     * @param context pass in context f the activity
+     */
+    public void startAutoSyncClass(Context context);
+
 
 
 }

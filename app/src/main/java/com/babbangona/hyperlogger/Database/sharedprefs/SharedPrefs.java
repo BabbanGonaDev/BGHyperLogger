@@ -16,7 +16,7 @@ public class SharedPrefs {
     int PRIVATE_MODE = 0;
 
     //TO-DO: CHANGE THIS TO YOUR SHARED PREFS NEED
-    private static final String PREF_NAME = "AndroidHivePref";
+    private static final String PREF_NAME = "BG_H_Logger_Prefs";
 
 
     //TODO: CHANGE THESE TO THE SPECIFIED STRINGS YOU NEED
@@ -45,6 +45,10 @@ public class SharedPrefs {
     public void setSyncTrigger(int flag){
         editor.putInt(SYNC_FLAG, flag);
         editor.commit();
+    }
+
+    public int getSyncTrigger() {
+        return pref.getInt(SYNC_FLAG, 1);
     }
 
 

@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.babbangona.hyperlogger.Database.AppDatabase;
 
-public class MainActivity extends AppCompatActivity {
+public class Main1Activity extends AppCompatActivity {
 
     AppDatabase appDatabase;
 
