@@ -23,7 +23,7 @@ public interface AppLogsDao {
     String  countActivities();
 
     @Query(" SELECT * FROM "+ DatabaseStringConstants.GENERAL_LOG_TABLE +" where sync_flag != '1' ")
-    List<AppLogs>  getUnsyncedLogs();
+    List<AppLogs>  getUnSyncedLogs();
 
     @Query(" SELECT * FROM "+ DatabaseStringConstants.GENERAL_LOG_TABLE +" ")
     List<AppLogs>  getAllRecords();

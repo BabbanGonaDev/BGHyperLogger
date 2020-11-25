@@ -37,7 +37,7 @@ public interface LogRecordsHelper {
 
     /**
      * this controls starting the auto sync class
-     * @param context pass in context f the activity
+     * @param context pass in context of the activity
      */
     public void startAutoSyncClass(Context context);
 

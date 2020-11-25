@@ -29,12 +29,15 @@ import java.util.concurrent.TimeUnit;
 //this model class implements the functions in the interface class
 public class LogRecords implements LogRecordsHelper {
 
+    public LogRecords(Context context) {
+        startAutoSyncClass(context);
+    }
 
     @Override
     public String captureLogs(Context context, String log_type, String log_message) {
 
         //insertion of logs for the general log tracking
-        AppLogs appLogs = new AppLogs(random(),log_type,log_message,getDate("spread"),"0");
+        AppLogs appLogs = new AppLogs(random()+"_"+getDate("concat"),log_type,log_message,getDate("spread"),"0");
         AppDatabase appDatabase =  AppDatabase.getInstance(context);
         appDatabase.appLogsDao().insert(appLogs);
 
@@ -47,7 +50,7 @@ public class LogRecords implements LogRecordsHelper {
     public String captureAuditLogs(Context context,String log_type, String log_message, String tag, String phone_name, String imei, String staff_id, String application_name, String application_version, String time_stamp) {
 
         //insertion of logs for the audit log tracking
-        HyperLoggerTable hyperLoggerTable = new HyperLoggerTable(random(),log_type,log_message,tag,phone_name,imei,staff_id,application_name,application_version,getDate("spread"),"0");
+        HyperLoggerTable hyperLoggerTable = new HyperLoggerTable(random()+"_"+getDate("concat"),log_type,log_message,tag,phone_name,imei,staff_id,application_name,application_version,getDate("spread"),"0");
         AppDatabase appDatabase =  AppDatabase.getInstance(context);
         appDatabase.hyperLoggerDao().insert(hyperLoggerTable);
 
@@ -139,7 +142,6 @@ public class LogRecords implements LogRecordsHelper {
         }
     }
 
-    @Override
     public void startAutoSyncClass(Context context){
         WorkManager workManager = WorkManager.getInstance(context);
 
