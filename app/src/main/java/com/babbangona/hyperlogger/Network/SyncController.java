@@ -1,14 +1,10 @@
-package com.example.hyperlogger.Network;
+package com.babbangona.hyperlogger.Network;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.example.hyperlogger.Database.AppDatabase;
+import com.babbangona.hyperlogger.Database.AppDatabase;
 import com.google.gson.Gson;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

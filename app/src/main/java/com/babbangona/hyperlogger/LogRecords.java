@@ -1,13 +1,13 @@
-package com.example.hyperlogger;
+package com.babbangona.hyperlogger;
 
 import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.example.hyperlogger.Database.AppDatabase;
-import com.example.hyperlogger.Database.Entities.AppLogs;
-import com.example.hyperlogger.Database.Entities.HyperLoggerTable;
-import com.example.hyperlogger.Database.sharedprefs.SharedPrefs;
+import com.babbangona.hyperlogger.Database.AppDatabase;
+import com.babbangona.hyperlogger.Database.Entities.AppLogs;
+import com.babbangona.hyperlogger.Database.Entities.HyperLoggerTable;
+import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
 
 import java.io.File;
 import java.io.FileWriter;

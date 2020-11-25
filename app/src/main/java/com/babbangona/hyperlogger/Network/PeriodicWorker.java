@@ -1,4 +1,4 @@
-package com.example.hyperlogger.Network;
+package com.babbangona.hyperlogger.Network;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
-
-import javax.xml.transform.Result;
 
 
 public class PeriodicWorker extends Worker {

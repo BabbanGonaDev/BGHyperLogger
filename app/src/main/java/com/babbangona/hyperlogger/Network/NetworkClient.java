@@ -1,4 +1,4 @@
-package com.example.hyperlogger.Network;
+package com.babbangona.hyperlogger.Network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

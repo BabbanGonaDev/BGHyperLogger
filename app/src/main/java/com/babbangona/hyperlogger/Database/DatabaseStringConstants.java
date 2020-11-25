@@ -1,4 +1,4 @@
-package com.example.hyperlogger.Database;
+package com.babbangona.hyperlogger.Database;
 
 public class DatabaseStringConstants {
 

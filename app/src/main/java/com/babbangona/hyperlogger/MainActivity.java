@@ -1,10 +1,10 @@
-package com.example.hyperlogger;
+package com.babbangona.hyperlogger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.hyperlogger.Database.AppDatabase;
+import com.babbangona.hyperlogger.Database.AppDatabase;
 
 public class MainActivity extends AppCompatActivity {
 

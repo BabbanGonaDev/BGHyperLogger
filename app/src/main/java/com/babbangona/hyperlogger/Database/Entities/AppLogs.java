@@ -1,11 +1,11 @@
-package com.example.hyperlogger.Database.Entities;
+package com.babbangona.hyperlogger.Database.Entities;
 
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-import com.example.hyperlogger.Database.DatabaseStringConstants;
+import com.babbangona.hyperlogger.Database.DatabaseStringConstants;
 
 
 @Entity(primaryKeys = {DatabaseStringConstants.COL_LOG_ID},

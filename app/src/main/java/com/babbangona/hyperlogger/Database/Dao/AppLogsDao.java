@@ -1,4 +1,4 @@
-package com.example.hyperlogger.Database.Dao;
+package com.babbangona.hyperlogger.Database.Dao;
 
 
 import androidx.room.Dao;
@@ -9,8 +9,8 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 
-import com.example.hyperlogger.Database.DatabaseStringConstants;
-import com.example.hyperlogger.Database.Entities.AppLogs;
+import com.babbangona.hyperlogger.Database.DatabaseStringConstants;
+import com.babbangona.hyperlogger.Database.Entities.AppLogs;
 
 import java.util.List;
 

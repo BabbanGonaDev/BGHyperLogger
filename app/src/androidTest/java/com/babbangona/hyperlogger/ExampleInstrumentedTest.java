@@ -1,4 +1,4 @@
-package com.example.hyperlogger;
+package com.babbangona.hyperlogger;
 
 import android.content.Context;
 

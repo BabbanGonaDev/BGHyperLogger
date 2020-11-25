@@ -1,4 +1,4 @@
-package com.example.hyperlogger.Database.sharedprefs;
+package com.babbangona.hyperlogger.Database.sharedprefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
