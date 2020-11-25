@@ -20,24 +20,32 @@ import java.util.Locale;
 import java.util.Random;
 
 
+//this model class implements the functions in the interface class
 public class LogRecords implements LogRecordsHelper {
 
 
     @Override
     public String captureLogs(Context context, String log_type, String log_message) {
 
+        //insertion of logs for the general log tracking
         AppLogs appLogs = new AppLogs(random(),log_type,log_message,getDate("spread"),"0");
         AppDatabase appDatabase =  AppDatabase.getInstance(context);
         appDatabase.appLogsDao().insert(appLogs);
+
+
+        //TODO please update this to the desired return, and also publish different return types in the interface class comment
         return "1";
     }
 
     @Override
     public String captureAuditLogs(Context context,String log_type, String log_message, String tag, String phone_name, String imei, String staff_id, String application_name, String application_version, String time_stamp) {
+
+        //insertion of logs for the audit log tracking
         HyperLoggerTable hyperLoggerTable = new HyperLoggerTable(random(),log_type,log_message,tag,phone_name,imei,staff_id,application_name,application_version,getDate("spread"),"0");
         AppDatabase appDatabase =  AppDatabase.getInstance(context);
         appDatabase.hyperLoggerDao().insert(hyperLoggerTable);
 
+        //TODO please update this to the desired return, and also publish different return types in the interface class comment
         return "1";
     }
 
@@ -45,21 +53,17 @@ public class LogRecords implements LogRecordsHelper {
     @Override
     public String getLogs(Context context) {
 
+        //get log count from the table on the general log count
         AppDatabase appDatabase =  AppDatabase.getInstance(context);
         return appDatabase.appLogsDao().countActivities();
 
     }
 
-    @Override
-    public void setBaseURL(Context context, String url, String script) {
-        SharedPrefs sharedPrefs = new SharedPrefs(context);
-        sharedPrefs.setURLDetails(url,script);
-
-
-    }
 
     @Override
     public void triggerSync(Context context, int flag) {
+
+        //hold the sync trigger flag in shared preference
         SharedPrefs sharedPrefs = new SharedPrefs(context);
         sharedPrefs.setSyncTrigger(flag);
 
@@ -68,6 +72,8 @@ public class LogRecords implements LogRecordsHelper {
     @Override
     public void writeToFile(Context context, int flag) {
 
+        //this block of code handles writing the logs to files
+        //TODO enable permission for storage so the library does not crash the application
         List<AppLogs> appLogs = AppDatabase.getInstance(context).appLogsDao().getAllRecords();
         ArrayList<String> logs = new ArrayList<>();
 
@@ -76,12 +82,13 @@ public class LogRecords implements LogRecordsHelper {
             logs.add("Log entry: "+mLogs.getActivity_id()+" "+mLogs.getLog_type()+" "+mLogs.getLog_message()+" "+mLogs.getSync_flag()+" "+mLogs.getTime_stamp()+"\n");
         }
 
-
+        //function writing to external storage
         generateNoteOnSD(context,"AuditLogs.txt", logs.toString());
     }
 
 
 
+    //TODO use this as one of the functions to generate the log ids
     public static String random() {
         Random generator = new Random();
         StringBuilder randomStringBuilder = new StringBuilder();
@@ -94,6 +101,7 @@ public class LogRecords implements LogRecordsHelper {
         return randomStringBuilder.toString();
     }
 
+    //generate date
     private String getDate(String module){
         SimpleDateFormat dateFormat1;
         if (module.matches("concat")) {
@@ -106,6 +114,7 @@ public class LogRecords implements LogRecordsHelper {
         Date date1 = new Date();
         return dateFormat1.format(date1);
     }
+
 
     public void generateNoteOnSD(Context context, String sFileName, String sBody) {
         try {
