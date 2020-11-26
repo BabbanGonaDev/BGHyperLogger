@@ -2,6 +2,7 @@ package com.babbangona.hyperlogger;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.work.PeriodicWorkRequest;
@@ -37,25 +38,39 @@ public class LogRecords implements LogRecordsHelper {
     public String captureLogs(Context context, String log_type, String log_message) {
 
         //insertion of logs for the general log tracking
-        AppLogs appLogs = new AppLogs(random()+"_"+getDate("concat"),log_type,log_message,getDate("spread"),"0");
-        AppDatabase appDatabase =  AppDatabase.getInstance(context);
-        appDatabase.appLogsDao().insert(appLogs);
+        String remark;
+        try {
+            AppLogs appLogs = new AppLogs(random()+"_"+getDate("concat"),log_type,log_message,getDate("spread"),"0");
+            AppDatabase appDatabase =  AppDatabase.getInstance(context);
+            appDatabase.appLogsDao().insert(appLogs);
+            remark = outputRemark(1,"", context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            remark = outputRemark(0, e.toString()+"", context);
+        }
 
 
         //TODO please update this to the desired return, and also publish different return types in the interface class comment
-        return "1";
+        return remark;
     }
 
     @Override
     public String captureAuditLogs(Context context,String log_type, String log_message, String tag, String phone_name, String imei, String staff_id, String application_name, String application_version, String time_stamp) {
 
         //insertion of logs for the audit log tracking
-        HyperLoggerTable hyperLoggerTable = new HyperLoggerTable(random()+"_"+getDate("concat"),log_type,log_message,tag,phone_name,imei,staff_id,application_name,application_version,getDate("spread"),"0");
-        AppDatabase appDatabase =  AppDatabase.getInstance(context);
-        appDatabase.hyperLoggerDao().insert(hyperLoggerTable);
+        String remark;
+        try {
+            HyperLoggerTable hyperLoggerTable = new HyperLoggerTable(random()+"_"+getDate("concat"),log_type,log_message,tag,phone_name,imei,staff_id,application_name,application_version,getDate("spread"),"0");
+            AppDatabase appDatabase =  AppDatabase.getInstance(context);
+            appDatabase.hyperLoggerDao().insert(hyperLoggerTable);
+            remark = outputRemark(1,"", context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            remark = outputRemark(0, e.toString()+"", context);
+        }
 
         //TODO please update this to the desired return, and also publish different return types in the interface class comment
-        return "1";
+        return remark;
     }
 
 
@@ -67,7 +82,6 @@ public class LogRecords implements LogRecordsHelper {
         return appDatabase.appLogsDao().countActivities();
 
     }
-
 
     @Override
     public void triggerSync(Context context, int flag) {
@@ -124,8 +138,8 @@ public class LogRecords implements LogRecordsHelper {
         return dateFormat1.format(date1);
     }
 
-
-    public void generateNoteOnSD(Context context, String sFileName, String sBody) {
+    //This method generates logs in a .txt to phone memory
+    private void generateNoteOnSD(Context context, String sFileName, String sBody) {
         try {
             File root = new File(Environment.getExternalStorageDirectory(), "Notes");
             if (!root.exists()) {
@@ -143,12 +157,29 @@ public class LogRecords implements LogRecordsHelper {
     }
 
     private void startAutoSyncClass(Context context){
-        WorkManager workManager = WorkManager.getInstance(context);
 
-        WorkRequest callDataRequest = new PeriodicWorkRequest.Builder(PeriodicWorker.class,
-                30, TimeUnit.MINUTES, 5, TimeUnit.MINUTES)
-                .build();
-        workManager.enqueue(callDataRequest);
+        String remark;
+        try {
+            WorkManager workManager = WorkManager.getInstance(context);
+
+            WorkRequest callDataRequest = new PeriodicWorkRequest.Builder(PeriodicWorker.class,
+                    30, TimeUnit.MINUTES, 5, TimeUnit.MINUTES)
+                    .build();
+            workManager.enqueue(callDataRequest);
+            remark = outputRemark(1,"", context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            remark = outputRemark(0, e.toString() + "", context);
+        }
+        Log.d("--BG LOGGER INIT--",remark);
+    }
+
+    private String outputRemark(int input, String cause, Context context){
+        if (input == 1){
+            return context.getResources().getString(R.string.op_success);
+        }else{
+            return context.getResources().getString(R.string.op_success) + ": " + cause;
+        }
     }
 
 }

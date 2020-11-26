@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HyperLogger</string>
+    <string name="op_success">Successful operation</string>
+    <string name="op_no_success">Unsuccessful operation</string>
 </resources>
