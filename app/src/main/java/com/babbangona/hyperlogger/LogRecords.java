@@ -142,7 +142,7 @@ public class LogRecords implements LogRecordsHelper {
         }
     }
 
-    public void startAutoSyncClass(Context context){
+    private void startAutoSyncClass(Context context){
         WorkManager workManager = WorkManager.getInstance(context);
 
         WorkRequest callDataRequest = new PeriodicWorkRequest.Builder(PeriodicWorker.class,
