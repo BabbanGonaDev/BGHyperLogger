@@ -1,8 +1,6 @@
 package com.babbangona.hyperlogger;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,13 +10,11 @@ import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
 import com.babbangona.hyperlogger.Database.AppDatabase;
-import com.babbangona.hyperlogger.Database.DatabaseStringConstants;
 import com.babbangona.hyperlogger.Database.Entities.AppLogs;
 import com.babbangona.hyperlogger.Database.Entities.HyperLoggerTable;
 import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
-import com.babbangona.hyperlogger.Network.NotificationService;
 import com.babbangona.hyperlogger.Network.PeriodicWorker;
-import com.mixpanel.android.mpmetrics.MixpanelAPI;
+import com.babbangona.hyperlogger.Network.SyncController;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -37,11 +33,13 @@ public class LogRecords implements LogRecordsHelper {
 
     MixPanelActivator mixPanelActivator;
 
-    public LogRecords(Context context, String staff_id, String token) {
+    public LogRecords(Context context, String staff_id, String token, String endpoint_url) {
         startAutoSyncClass(context);
         SharedPrefs sharedPrefs = new SharedPrefs(context);
         sharedPrefs.setMixPanelStaffId(staff_id);
         sharedPrefs.setMixPanelToken(token);
+        sharedPrefs.setURLDetails(endpoint_url);
+        forceSync(context);
     }
 
     public LogRecords() {
@@ -142,12 +140,12 @@ public class LogRecords implements LogRecordsHelper {
         return mixPanelActivator.checkMixPanelExitStatus();
     }
 
-    @Override
-    public void forceSync(Context context) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            context.startForegroundService(new Intent(context, NotificationService.class));
-        } else {
-            context.startService(new Intent(context, NotificationService.class));
+    private void forceSync(Context context) {
+
+        //String message = generateMessage();
+        SharedPrefs sharedPrefs = new SharedPrefs(context);
+        if(sharedPrefs.getSyncTrigger() == 1){
+            new SyncController(context).uploadLogs();
         }
     }
 

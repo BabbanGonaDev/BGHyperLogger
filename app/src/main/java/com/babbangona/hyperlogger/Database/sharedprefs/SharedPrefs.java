@@ -40,9 +40,8 @@ public class SharedPrefs {
 
 
 
-    public void setURLDetails(String url, String script){
+    public void setURLDetails(String url){
         editor.putString(BASE_URL, url);
-        editor.putString(BASE_SCRIPT, script);
         editor.commit();
     }
 

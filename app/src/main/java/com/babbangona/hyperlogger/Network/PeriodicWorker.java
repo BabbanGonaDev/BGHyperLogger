@@ -24,13 +24,11 @@ public class PeriodicWorker extends Worker {
     public Result doWork() {
         Log.i("Worker in action", "Doing work");
         SharedPrefs sharedPrefs = new SharedPrefs(getApplicationContext());
+        Log.d("--BG_LOGGER:-", "sync_activated");
         int sync_trigger = sharedPrefs.getSyncTrigger();
         if (sync_trigger == 1) {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                    getApplicationContext().startForegroundService(new Intent(getApplicationContext(), NotificationService.class));
-            } else {
-                getApplicationContext().startService(new Intent(getApplicationContext(), NotificationService.class));
-            }
+            Log.d("--BG_LOGGER:-", "sync_activated_with_flag");
+            new SyncController(getApplicationContext()).uploadLogs();
         }
         return Result.success();
     }

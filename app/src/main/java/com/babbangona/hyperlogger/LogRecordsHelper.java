@@ -65,7 +65,7 @@ public interface LogRecordsHelper {
     /**
      * this controls stopping syncing
      */
-    public void forceSync(Context context);
+    //public void forceSync(Context context);
 
 
 
