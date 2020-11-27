@@ -1,6 +1,8 @@
 package com.babbangona.hyperlogger;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import com.babbangona.hyperlogger.Database.DatabaseStringConstants;
 import com.babbangona.hyperlogger.Database.Entities.AppLogs;
 import com.babbangona.hyperlogger.Database.Entities.HyperLoggerTable;
 import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
+import com.babbangona.hyperlogger.Network.NotificationService;
 import com.babbangona.hyperlogger.Network.PeriodicWorker;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
@@ -131,6 +134,15 @@ public class LogRecords implements LogRecordsHelper {
     @Override
     public boolean checkMixPanelExitStatus() {
         return mixPanelActivator.checkMixPanelExitStatus();
+    }
+
+    @Override
+    public void forceSync(Context context) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            context.startForegroundService(new Intent(context, NotificationService.class));
+        } else {
+            context.startService(new Intent(context, NotificationService.class));
+        }
     }
 
     //TODO use this as one of the functions to generate the log ids

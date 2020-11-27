@@ -62,6 +62,11 @@ public interface LogRecordsHelper {
      */
     public boolean checkMixPanelExitStatus();
 
+    /**
+     * this controls stopping syncing
+     */
+    public void forceSync(Context context);
+
 
 
 }
