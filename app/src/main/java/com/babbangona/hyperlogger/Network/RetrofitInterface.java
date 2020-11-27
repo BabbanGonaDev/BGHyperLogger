@@ -10,13 +10,14 @@ import retrofit2.http.POST;
 public interface RetrofitInterface {
 
     /**
-     * This is the interface class that decides
+     * This is the interface class for sync operations
      * */
 
     @FormUrlEncoded
     @POST("uploadLogs")
-        Call<List<UploadLogsResponse>> uploadLogs(@Field("upload_list") String upload_list);
+    Call<List<UploadLogsResponse>> uploadLogs(@Field("upload_list") String upload_list);
 
+    @FormUrlEncoded
     @POST("uploadAuditLogs")
     Call<List<UploadLogsResponse>> uploadAuditLogs(@Field("upload_list") String upload_list);
 

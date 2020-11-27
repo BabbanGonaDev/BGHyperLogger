@@ -10,10 +10,12 @@ import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
 import com.babbangona.hyperlogger.Database.AppDatabase;
+import com.babbangona.hyperlogger.Database.DatabaseStringConstants;
 import com.babbangona.hyperlogger.Database.Entities.AppLogs;
 import com.babbangona.hyperlogger.Database.Entities.HyperLoggerTable;
 import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
 import com.babbangona.hyperlogger.Network.PeriodicWorker;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 
 //this model class implements the functions in the interface class
 public class LogRecords implements LogRecordsHelper {
+
+    MixPanelActivator mixPanelActivator;
 
     public LogRecords(Context context) {
         startAutoSyncClass(context);
@@ -93,7 +97,7 @@ public class LogRecords implements LogRecordsHelper {
     }
 
     @Override
-    public void writeToFile(Context context, int flag) {
+    public void writeAuditLogsToFile(Context context, int flag) {
 
         //this block of code handles writing the logs to files
         //TODO enable permission for storage so the library does not crash the application
@@ -102,14 +106,32 @@ public class LogRecords implements LogRecordsHelper {
 
 
         for (AppLogs mLogs: appLogs){
-            logs.add("Log entry: "+mLogs.getActivity_id()+" "+mLogs.getLog_type()+" "+mLogs.getLog_message()+" "+mLogs.getSync_flag()+" "+mLogs.getTime_stamp()+"\n");
+            logs.add("Log entry: "+mLogs.getLog_id()+" "+mLogs.getLog_type()+" "+mLogs.getLog_message()+" "+mLogs.getSync_flag()+" "+mLogs.getTime_stamp()+"\n");
         }
 
         //function writing to external storage
         generateNoteOnSD(context,"AuditLogs.txt", logs.toString());
     }
 
+    @Override
+    public void writeGeneralLogsToFile(Context context, int flag) {
+        //does nothing for now.
+    }
 
+    @Override
+    public void startMixPanelClass(Context context) {
+        mixPanelActivator = new MixPanelActivator(context, true);
+    }
+
+    @Override
+    public void stopMixPanelClass() {
+        mixPanelActivator.deactivateMixPanel();
+    }
+
+    @Override
+    public boolean checkMixPanelExitStatus() {
+        return mixPanelActivator.checkMixPanelExitStatus();
+    }
 
     //TODO use this as one of the functions to generate the log ids
     public static String random() {
@@ -178,7 +200,7 @@ public class LogRecords implements LogRecordsHelper {
         if (input == 1){
             return context.getResources().getString(R.string.op_success);
         }else{
-            return context.getResources().getString(R.string.op_success) + ": " + cause;
+            return context.getResources().getString(R.string.op_no_success) + ": " + cause;
         }
     }
 

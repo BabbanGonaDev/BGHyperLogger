@@ -33,13 +33,34 @@ public interface LogRecordsHelper {
     /**
      *  this control writing a file to the to the storage that holds all audit logs
      * */
-    public void writeToFile(Context context, int flag);
+    public void writeAuditLogsToFile(Context context, int flag);
+
+    /**
+     *  this control writing a file to the to the storage that holds all audit logs
+     * */
+    public void writeGeneralLogsToFile(Context context, int flag);
 
     /**
      * this controls starting the auto sync class
      * @param context pass in context of the activity
      */
     //public void startAutoSyncClass(Context context);
+
+    /**
+     * this controls starting the mix_panel
+     * @param context pass in context of the activity
+     */
+    public void startMixPanelClass(Context context);
+
+    /**
+     * this controls stopping mix_panel
+     */
+    public void stopMixPanelClass();
+
+    /**
+     * this controls stopping mix_panel
+     */
+    public boolean checkMixPanelExitStatus();
 
 
 

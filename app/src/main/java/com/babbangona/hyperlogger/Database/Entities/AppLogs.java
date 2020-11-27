@@ -14,10 +14,9 @@ public class AppLogs {
 
     @ColumnInfo(name = DatabaseStringConstants.COL_LOG_ID)
     @NonNull
-    private String activity_id;
+    private String log_id;
 
     @ColumnInfo(name = DatabaseStringConstants.COL_LOG_TYPE)
-    @NonNull
     private String log_type;
 
     @ColumnInfo(name = DatabaseStringConstants.COL_LOG_MESSAGE)
@@ -30,8 +29,8 @@ public class AppLogs {
     @ColumnInfo(name = DatabaseStringConstants.COL_SYNC_FLAG)
     private String sync_flag;
 
-    public AppLogs(@NonNull String activity_id, @NonNull String log_type, String log_message, String time_stamp, String sync_flag) {
-        this.activity_id = activity_id;
+    public AppLogs(@NonNull String log_id, String log_type, String log_message, String time_stamp, String sync_flag) {
+        this.log_id = log_id;
         this.log_type = log_type;
         this.log_message = log_message;
         this.time_stamp = time_stamp;
@@ -39,20 +38,19 @@ public class AppLogs {
     }
 
     @NonNull
-    public String getActivity_id() {
-        return activity_id;
+    public String getLog_id() {
+        return log_id;
     }
 
-    public void setActivity_id(@NonNull String activity_id) {
-        this.activity_id = activity_id;
+    public void setLog_id(@NonNull String log_id) {
+        this.log_id = log_id;
     }
 
-    @NonNull
     public String getLog_type() {
         return log_type;
     }
 
-    public void setLog_type(@NonNull String log_type) {
+    public void setLog_type(String log_type) {
         this.log_type = log_type;
     }
 

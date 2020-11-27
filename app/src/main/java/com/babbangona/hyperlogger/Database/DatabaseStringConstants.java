@@ -26,4 +26,9 @@ public class DatabaseStringConstants {
     public static final String COL_APPLICATION_VERSION          = "application_version";
     public static final String COL_TIME_STAMP                   = "time_stamp";
     public static final String COL_SYNC_FLAG                    = "sync_flag";
+
+    /**
+     * mix_panel token
+     */
+    public static final String MIX_PANEL_TOKEN = "b91eedf1ec9d6c8cddbe208f54c2e389";
 }

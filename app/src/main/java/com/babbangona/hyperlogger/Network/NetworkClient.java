@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkClient {
 
-    public static final String BASE_URL = "https://mobileapps.testenvironmentbg.com/auditlog/audit_slim/public/api/v1/";
+    public static final String BASE_URL = "https://mobileapps.testenvironmentbg.com/hyperlogger_api/public/api/v1/";
     public Retrofit retrofit = null;
     private static NetworkClient mInstance;
 
