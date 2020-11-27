@@ -29,7 +29,7 @@ public class SyncController {
     public void uploadLogs() {
 
         Call<List<UploadLogsResponse>> call = NetworkClient
-                .getInstance()
+                .getInstance(context)
                 .getApi()
                 .uploadLogs(new Gson().toJson(AppDatabase.getInstance(context).appLogsDao().getUnSyncedLogs()));
 
@@ -75,7 +75,7 @@ public class SyncController {
     public void  uploadAuditLogs() {
 
         Call<List<UploadLogsResponse>> call = NetworkClient
-                .getInstance()
+                .getInstance(context)
                 .getApi()
                 .uploadAuditLogs(new Gson().toJson(AppDatabase.getInstance(context).hyperLoggerDao().getUnsyncedLogs()));
 

@@ -37,8 +37,14 @@ public class LogRecords implements LogRecordsHelper {
 
     MixPanelActivator mixPanelActivator;
 
-    public LogRecords(Context context) {
+    public LogRecords(Context context, String staff_id, String token) {
         startAutoSyncClass(context);
+        SharedPrefs sharedPrefs = new SharedPrefs(context);
+        sharedPrefs.setMixPanelStaffId(staff_id);
+        sharedPrefs.setMixPanelToken(token);
+    }
+
+    public LogRecords() {
     }
 
     @Override

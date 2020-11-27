@@ -25,6 +25,10 @@ public class SharedPrefs {
     public static final String SYNC_FLAG = "sync_flag";
 
 
+    public static final String MIX_PANEL_STAFF_ID = "mix_panel_staff_id";
+    public static final String MIX_PANEL_TOKEN = "mix_panel_staff_id";
+
+
 
 
     // Constructor
@@ -42,6 +46,16 @@ public class SharedPrefs {
         editor.commit();
     }
 
+    public void setMixPanelToken(String token){
+        editor.putString(MIX_PANEL_TOKEN, token);
+        editor.commit();
+    }
+
+    public void setMixPanelStaffId(String staff_id){
+        editor.putString(MIX_PANEL_STAFF_ID, staff_id);
+        editor.commit();
+    }
+
     public void setSyncTrigger(int flag){
         editor.putInt(SYNC_FLAG, flag);
         editor.commit();
@@ -49,6 +63,18 @@ public class SharedPrefs {
 
     public int getSyncTrigger() {
         return pref.getInt(SYNC_FLAG, 1);
+    }
+
+    public String getMixPanelStaffId(){
+        return pref.getString(MIX_PANEL_STAFF_ID, "T-1000000000000LOG");
+    }
+
+    public String getBaseUrl(){
+        return pref.getString(BASE_URL, "https://mobileapps.testenvironmentbg.com/hyperlogger_api/public/api/v1/");
+    }
+
+    public String getMixPanelToken(){
+        return pref.getString(MIX_PANEL_TOKEN, "de8d61ea252990ca1b6aef60b3220afc");
     }
 
 

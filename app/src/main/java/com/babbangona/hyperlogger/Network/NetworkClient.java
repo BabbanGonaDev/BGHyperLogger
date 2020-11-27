@@ -1,5 +1,8 @@
 package com.babbangona.hyperlogger.Network;
 
+import android.content.Context;
+
+import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -15,7 +18,7 @@ public class NetworkClient {
     private static NetworkClient mInstance;
 
 
-    private NetworkClient(){
+    private NetworkClient(Context context){
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -24,15 +27,15 @@ public class NetworkClient {
         OkHttpClient okHttpClient = builder.build();
 
         Gson gson = new GsonBuilder().setLenient().create();
-        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).
+        retrofit = new Retrofit.Builder().baseUrl(new SharedPrefs(context).getBaseUrl()).
                 addConverterFactory(GsonConverterFactory.create(gson)).client(okHttpClient).build();
 
 
     }
 
-    public static synchronized NetworkClient getInstance() {
+    public static synchronized NetworkClient getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new NetworkClient();
+            mInstance = new NetworkClient(context);
         }
         return mInstance;
     }

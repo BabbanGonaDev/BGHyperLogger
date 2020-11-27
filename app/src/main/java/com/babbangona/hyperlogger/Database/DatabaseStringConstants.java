@@ -30,5 +30,6 @@ public class DatabaseStringConstants {
     /**
      * mix_panel token
      */
-    public static final String MIX_PANEL_TOKEN = "b91eedf1ec9d6c8cddbe208f54c2e389";
+    //public static final String MIX_PANEL_TOKEN = "b91eedf1ec9d6c8cddbe208f54c2e389";
+    public static final String MIX_PANEL_TOKEN = "de8d61ea252990ca1b6aef60b3220afc";
 }
