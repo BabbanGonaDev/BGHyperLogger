@@ -1,6 +1,7 @@
 package com.babbangona.hyperlogger;
 
 import android.content.Context;
+import android.os.Debug;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class LogRecords implements LogRecordsHelper {
         sharedPrefs.setMixPanelStaffId(staff_id);
         sharedPrefs.setMixPanelToken(token);
         sharedPrefs.setURLDetails(endpoint_url);
-        forceSync(context);
+        //forceSync(context);
     }
 
     public LogRecords() {
@@ -140,6 +141,12 @@ public class LogRecords implements LogRecordsHelper {
         return mixPanelActivator.checkMixPanelExitStatus();
     }
 
+    @Override
+    public String getMemoryParameters() {
+        RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
+        return runTimeMemoryParameters.toString();
+    }
+
     private void forceSync(Context context) {
 
         //String message = generateMessage();
@@ -209,7 +216,7 @@ public class LogRecords implements LogRecordsHelper {
             e.printStackTrace();
             remark = outputRemark(0, e.toString() + "", context);
         }
-        Log.d("--BG LOGGER INIT--",remark);
+        Log.d("--BG LOGGER SYNC--",remark);
     }
 
     private String outputRemark(int input, String cause, Context context){

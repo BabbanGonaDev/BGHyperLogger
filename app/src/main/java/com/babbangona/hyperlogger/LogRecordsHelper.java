@@ -67,6 +67,11 @@ public interface LogRecordsHelper {
      */
     //public void forceSync(Context context);
 
+    /**
+     * this controls method
+     */
+    public String getMemoryParameters();
+
 
 
 }
