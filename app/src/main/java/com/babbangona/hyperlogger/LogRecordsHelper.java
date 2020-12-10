@@ -68,9 +68,29 @@ public interface LogRecordsHelper {
     //public void forceSync(Context context);
 
     /**
-     * this controls method
+     * this controls method to get full memory parameters
      */
     public String getMemoryParameters();
+
+    /**
+     * this controls method to get available memory
+     */
+    public String getAvailableMemory();
+
+    /**
+     * this controls method to get ram utilization
+     */
+    public String getRamUtilization();
+
+    /**
+     * this controls method to get memory usage
+     */
+    public String getMemoryUsage();
+
+    /**
+     * this controls method
+     */
+    //public String getCPULoads();
 
 
 

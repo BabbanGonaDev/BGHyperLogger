@@ -67,12 +67,16 @@ public class LogRecords implements LogRecordsHelper {
     }
 
     @Override
-    public String captureAuditLogs(Context context,String log_type, String log_message, String tag, String phone_name, String imei, String staff_id, String application_name, String application_version, String time_stamp) {
+    public String captureAuditLogs(Context context,String log_type, String log_message, String tag,
+                                   String phone_name, String imei, String staff_id, String application_name,
+                                   String application_version, String time_stamp) {
 
         //insertion of logs for the audit log tracking
         String remark;
         try {
-            HyperLoggerTable hyperLoggerTable = new HyperLoggerTable(random()+"_"+getDate("concat"),log_type,log_message,tag,phone_name,imei,staff_id,application_name,application_version,getDate("spread"),"0");
+            RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
+            HyperLoggerTable hyperLoggerTable = new HyperLoggerTable(random()+"_"+getDate("concat"),log_type,log_message,tag,phone_name,imei,staff_id,
+                    application_name,application_version,getDate("spread"),"0",runTimeMemoryParameters.getRamUtilization(),runTimeMemoryParameters.getMemoryUsage());
             AppDatabase appDatabase =  AppDatabase.getInstance(context);
             appDatabase.hyperLoggerDao().insert(hyperLoggerTable);
             remark = outputRemark(1,"", context);
@@ -146,6 +150,30 @@ public class LogRecords implements LogRecordsHelper {
         RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
         return runTimeMemoryParameters.toString();
     }
+
+    @Override
+    public String getAvailableMemory() {
+        RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
+        return runTimeMemoryParameters.getAvailableMemoryInMB();
+    }
+
+    @Override
+    public String getRamUtilization() {
+        RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
+        return runTimeMemoryParameters.getRamUtilization();
+    }
+
+    @Override
+    public String getMemoryUsage() {
+        RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
+        return runTimeMemoryParameters.getMemoryUsage();
+    }
+
+    /*@Override
+    public String getCPULoads() {
+        RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
+        return runTimeMemoryParameters.getCPULoadComposer();
+    }*/
 
     private void forceSync(Context context) {
 

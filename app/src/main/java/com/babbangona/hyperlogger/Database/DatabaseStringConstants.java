@@ -26,6 +26,8 @@ public class DatabaseStringConstants {
     public static final String COL_APPLICATION_VERSION          = "application_version";
     public static final String COL_TIME_STAMP                   = "time_stamp";
     public static final String COL_SYNC_FLAG                    = "sync_flag";
+    public static final String COL_RAM_UTILIZATION              = "ram_utilization";
+    public static final String COL_MEMORY_USAGE                 = "memory_usage";
 
     /**
      * mix_panel token

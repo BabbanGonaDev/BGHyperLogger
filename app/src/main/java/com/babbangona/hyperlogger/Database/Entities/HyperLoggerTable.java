@@ -44,13 +44,19 @@ public class HyperLoggerTable {
     @ColumnInfo(name = DatabaseStringConstants.COL_TIME_STAMP)
     private String time_stamp;
 
-
     @ColumnInfo(name = DatabaseStringConstants.COL_SYNC_FLAG)
     private String sync_flag;
 
+    @ColumnInfo(name = DatabaseStringConstants.COL_RAM_UTILIZATION)
+    private String ram_utilization;
+
+    @ColumnInfo(name = DatabaseStringConstants.COL_MEMORY_USAGE)
+    private String memory_usage;
+
     public HyperLoggerTable(@NonNull String log_id, @NonNull String log_type, String log_message,
                             String tag, String phone_name, String imei, String staff_id, String application_name,
-                            String application_version, String time_stamp, String sync_flag) {
+                            String application_version, String time_stamp, String sync_flag, String ram_utilization,
+                            String memory_usage) {
         this.log_id = log_id;
         this.log_type = log_type;
         this.log_message = log_message;
@@ -62,6 +68,8 @@ public class HyperLoggerTable {
         this.application_version = application_version;
         this.time_stamp = time_stamp;
         this.sync_flag = sync_flag;
+        this.ram_utilization = ram_utilization;
+        this.memory_usage = memory_usage;
     }
 
 
@@ -153,5 +161,21 @@ public class HyperLoggerTable {
 
     public void setSync_flag(String sync_flag) {
         this.sync_flag = sync_flag;
+    }
+
+    public String getRam_utilization() {
+        return ram_utilization;
+    }
+
+    public void setRam_utilization(String ram_utilization) {
+        this.ram_utilization = ram_utilization;
+    }
+
+    public String getMemory_usage() {
+        return memory_usage;
+    }
+
+    public void setMemory_usage(String memory_usage) {
+        this.memory_usage = memory_usage;
     }
 }
