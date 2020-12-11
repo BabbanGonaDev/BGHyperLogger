@@ -6,7 +6,7 @@ public class DatabaseStringConstants {
      * database particulars
      */
     public static final String MS_PLAYBOOK_DATABASE_NAME        = "hyper_logger.db";
-    public static final int MS_PLAYBOOK_DATABASE_VERSION        = 1;
+    public static final int MS_PLAYBOOK_DATABASE_VERSION        = 2;
 
 
     public static final String LOG_TABLE                        = "log_table";
