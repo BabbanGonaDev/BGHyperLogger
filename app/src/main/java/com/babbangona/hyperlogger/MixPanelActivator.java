@@ -4,20 +4,27 @@ import android.content.Context;
 
 import com.babbangona.hyperlogger.Database.DatabaseStringConstants;
 import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
+import com.google.gson.JsonObject;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MixPanelActivator {
 
     Context context;
 
     MixpanelAPI mix_panel;
+    SharedPrefs sharedPrefs;
 
     public MixPanelActivator(Context context, boolean activate) {
         this.context = context;
-        SharedPrefs sharedPrefs = new SharedPrefs(context);
+        sharedPrefs = new SharedPrefs(context);
         if(activate){
             mix_panel = MixpanelAPI.getInstance(context, sharedPrefs.getMixPanelToken());
+            mix_panel.alias(sharedPrefs.getMixPanelStaffId(),null);
             mix_panel.identify(sharedPrefs.getMixPanelStaffId());
+            setMixPanelProperties();
         }
     }
 
@@ -33,6 +40,22 @@ public class MixPanelActivator {
 
     public boolean checkMixPanelExitStatus(){
         return mix_panel.hasOptedOutTracking();
+    }
+
+    public void mixPanelTracking(String tracking_title, JSONObject jsonObject){
+        mix_panel.track(tracking_title, jsonObject);
+    }
+
+    public void mixPanelTracking(String tracking_title){
+        mix_panel.track(tracking_title);
+    }
+
+    private void setMixPanelProperties(){
+        /*JSONObject props = new JSONObject();
+        props.put("$staff_id", sharedPrefs.getMixPanelStaffId());*/
+
+        mix_panel.getPeople().identify(sharedPrefs.getMixPanelStaffId());
+        mix_panel.getPeople().set("$staff_id", sharedPrefs.getMixPanelStaffId());
     }
 
 }

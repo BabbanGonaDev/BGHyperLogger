@@ -17,6 +17,8 @@ import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
 import com.babbangona.hyperlogger.Network.PeriodicWorker;
 import com.babbangona.hyperlogger.Network.SyncController;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -167,6 +169,16 @@ public class LogRecords implements LogRecordsHelper {
     public String getMemoryUsage() {
         RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
         return runTimeMemoryParameters.getMemoryUsage();
+    }
+
+    @Override
+    public void mixPanelTracker(String tracking_title, JSONObject jsonObject) {
+        mixPanelActivator.mixPanelTracking(tracking_title, jsonObject);
+    }
+
+    @Override
+    public void mixPanelTracker(String tracking_title) {
+        mixPanelActivator.mixPanelTracking(tracking_title);
     }
 
     /*@Override

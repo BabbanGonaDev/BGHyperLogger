@@ -26,7 +26,7 @@ public class SharedPrefs {
 
 
     public static final String MIX_PANEL_STAFF_ID = "mix_panel_staff_id";
-    public static final String MIX_PANEL_TOKEN = "mix_panel_staff_id";
+    public static final String MIX_PANEL_TOKEN = "mix_panel_staff_token";
 
 
 

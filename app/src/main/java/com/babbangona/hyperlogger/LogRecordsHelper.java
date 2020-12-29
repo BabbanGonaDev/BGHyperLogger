@@ -2,6 +2,8 @@ package com.babbangona.hyperlogger;
 
 import android.content.Context;
 
+import org.json.JSONObject;
+
 public interface LogRecordsHelper {
 
 
@@ -86,6 +88,16 @@ public interface LogRecordsHelper {
      * this controls method to get memory usage
      */
     public String getMemoryUsage();
+
+    /**
+     * this controls method to track items using json and a title
+     */
+    public void mixPanelTracker(String tracking_title, JSONObject jsonObject);
+
+    /**
+     * this controls method to track items using a tracking title
+     */
+    public void mixPanelTracker(String tracking_title);
 
     /**
      * this controls method
