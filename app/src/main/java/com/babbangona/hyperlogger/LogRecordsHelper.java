@@ -57,12 +57,12 @@ public interface LogRecordsHelper {
     /**
      * this controls stopping mix_panel
      */
-    public void stopMixPanelClass();
+    public void stopMixPanelClass(Context context);
 
     /**
      * this controls stopping mix_panel
      */
-    public boolean checkMixPanelExitStatus();
+    public boolean checkMixPanelExitStatus(Context context);
 
     /**
      * this controls stopping syncing
@@ -92,12 +92,12 @@ public interface LogRecordsHelper {
     /**
      * this controls method to track items using json and a title
      */
-    public void mixPanelTracker(String tracking_title, JSONObject jsonObject);
+    public void mixPanelTracker(String tracking_title, JSONObject jsonObject, Context context);
 
     /**
      * this controls method to track items using a tracking title
      */
-    public void mixPanelTracker(String tracking_title);
+    public void mixPanelTracker(String tracking_title, Context context);
 
     /**
      * this controls method

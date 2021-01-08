@@ -28,6 +28,12 @@ public class MixPanelActivator {
         }
     }
 
+    public MixPanelActivator(Context context) {
+        this.context = context;
+        sharedPrefs = new SharedPrefs(context);
+        mix_panel = MixpanelAPI.getInstance(context, sharedPrefs.getMixPanelToken());
+    }
+
     public void deactivateMixPanel(){
         try {
             mix_panel.optOutTracking();

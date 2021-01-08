@@ -138,12 +138,14 @@ public class LogRecords implements LogRecordsHelper {
     }
 
     @Override
-    public void stopMixPanelClass() {
+    public void stopMixPanelClass(Context context) {
+        mixPanelActivator = new MixPanelActivator(context);
         mixPanelActivator.deactivateMixPanel();
     }
 
     @Override
-    public boolean checkMixPanelExitStatus() {
+    public boolean checkMixPanelExitStatus(Context context) {
+        mixPanelActivator = new MixPanelActivator(context);
         return mixPanelActivator.checkMixPanelExitStatus();
     }
 
@@ -172,12 +174,14 @@ public class LogRecords implements LogRecordsHelper {
     }
 
     @Override
-    public void mixPanelTracker(String tracking_title, JSONObject jsonObject) {
+    public void mixPanelTracker(String tracking_title, JSONObject jsonObject, Context context) {
+        mixPanelActivator = new MixPanelActivator(context);
         mixPanelActivator.mixPanelTracking(tracking_title, jsonObject);
     }
 
     @Override
-    public void mixPanelTracker(String tracking_title) {
+    public void mixPanelTracker(String tracking_title, Context context) {
+        mixPanelActivator = new MixPanelActivator(context);
         mixPanelActivator.mixPanelTracking(tracking_title);
     }
 
