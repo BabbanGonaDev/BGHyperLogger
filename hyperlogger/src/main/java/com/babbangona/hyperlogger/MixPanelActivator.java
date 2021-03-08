@@ -10,7 +10,6 @@ import org.json.JSONObject;
 public class MixPanelActivator {
 
     Context context;
-
     MixpanelAPI mix_panel;
     SharedPrefs sharedPrefs;
 
@@ -37,7 +36,7 @@ public class MixPanelActivator {
         } catch (Exception e) {
             e.printStackTrace();
             LogRecords logRecords = new LogRecords();
-            logRecords.captureLogs(context, "Library failure","Mix Panel Failed "+ e.toString());
+            logRecords.captureLogs(context, "Library failure", "Mix Panel Failed " + e.toString());
         }
     }
 
@@ -54,8 +53,6 @@ public class MixPanelActivator {
     }
 
     private void setMixPanelProperties(){
-        /*JSONObject props = new JSONObject();
-        props.put("$staff_id", sharedPrefs.getMixPanelStaffId());*/
 
         mix_panel.getPeople().identify(sharedPrefs.getMixPanelStaffId());
         mix_panel.getPeople().set("$staff_id", sharedPrefs.getMixPanelStaffId());

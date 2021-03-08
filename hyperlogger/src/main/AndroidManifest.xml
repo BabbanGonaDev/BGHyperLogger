@@ -14,5 +14,4 @@
         android:theme="@style/Theme.HyperLogger">
     </application>
 
-    <!--android:label="@string/app_name"-->
 </manifest>
