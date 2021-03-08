@@ -31,7 +31,7 @@ public class SyncController {
         Call<List<UploadLogsResponse>> call = NetworkClient
                 .getInstance(context)
                 .getApi()
-                .uploadLogs(new Gson().toJson(AppDatabase.getInstance(context).appLogsDao().getUnSyncedLogs()));
+                .uploadGeneralLogs(new Gson().toJson(AppDatabase.getInstance(context).appLogsDao().getUnSyncedLogs()));
 
         call.enqueue(new Callback<List<UploadLogsResponse>>() {
             @Override
