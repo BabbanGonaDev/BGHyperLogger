@@ -1,62 +1,35 @@
-package com.babbangona.hyperlogger.Database.Entities;
+package com.babbangona.hyperlogger.data.room.entities;
 
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-import com.babbangona.hyperlogger.Database.DatabaseStringConstants;
 
+@Entity(tableName = "logs_table")
+public class LogsTable {
 
-@Entity(primaryKeys = {DatabaseStringConstants.COL_LOG_ID},
-        tableName = DatabaseStringConstants.LOG_TABLE)
-public class HyperLoggerTable {
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_LOG_ID)
+    @PrimaryKey
     @NonNull
     private String log_id;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_LOG_TYPE)
     @NonNull
     private String log_type;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_LOG_MESSAGE)
     private String log_message;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_TAG)
     private String tag;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_PHONE_NAME)
     private String phone_name;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_IMEI)
     private String imei;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_STAFF_ID)
     private String staff_id;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_APPLICATION_NAME)
     private String application_name;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_APPLICATION_VERSION)
     private String application_version;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_TIME_STAMP)
     private String time_stamp;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_SYNC_FLAG)
     private String sync_flag;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_RAM_UTILIZATION)
     private String ram_utilization;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_MEMORY_USAGE)
     private String memory_usage;
 
-    public HyperLoggerTable(@NonNull String log_id, @NonNull String log_type, String log_message,
-                            String tag, String phone_name, String imei, String staff_id, String application_name,
-                            String application_version, String time_stamp, String sync_flag, String ram_utilization,
-                            String memory_usage) {
+    public LogsTable(@NonNull String log_id, @NonNull String log_type, String log_message,
+                     String tag, String phone_name, String imei, String staff_id, String application_name,
+                     String application_version, String time_stamp, String sync_flag, String ram_utilization,
+                     String memory_usage) {
         this.log_id = log_id;
         this.log_type = log_type;
         this.log_message = log_message;

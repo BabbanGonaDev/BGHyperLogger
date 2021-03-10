@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.babbangona.hyperlogger.LogRecords;
+import com.babbangona.hyperlogger.LogType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logger = new LogRecords(this, "T-10000000000000AA", "", "");
+        logger = new LogRecords(this, "T-10000000000000AA", "");
 
-        logger.captureAuditLogs(this, "", "", "", "", "",
+        logger.captureAuditLogs(this, LogType.EXCEPTION, "", "", "", "",
                 "", "", "", "");
 
-        logger.captureLogs(this, "", "");
+        logger.captureGeneralLogs(this, LogType.CRASH, "");
 
         logger.startMixPanelClass(this);
 

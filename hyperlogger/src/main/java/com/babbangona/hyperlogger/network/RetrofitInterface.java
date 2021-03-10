@@ -1,4 +1,4 @@
- package com.babbangona.hyperlogger.Network;
+ package com.babbangona.hyperlogger.network;
 
 
 import java.util.List;
@@ -16,10 +16,10 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("uploadGeneralLogs")
-    Call<List<UploadLogsResponse>> uploadGeneralLogs(@Field("upload_list") String upload_list);
+    Call<List<UploadResponse>> uploadGeneralLogs(@Field("upload_list") String upload_list);
 
     @FormUrlEncoded
     @POST("uploadAuditLogs")
-    Call<List<UploadLogsResponse>> uploadAuditLogs(@Field("upload_list") String upload_list);
+    Call<List<UploadResponse>> uploadAuditLogs(@Field("upload_list") String upload_list);
 
 }

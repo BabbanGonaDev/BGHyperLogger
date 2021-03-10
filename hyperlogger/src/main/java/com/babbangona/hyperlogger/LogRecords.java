@@ -9,12 +9,12 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
-import com.babbangona.hyperlogger.Database.AppDatabase;
-import com.babbangona.hyperlogger.Database.Entities.AppLogs;
-import com.babbangona.hyperlogger.Database.Entities.HyperLoggerTable;
-import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
-import com.babbangona.hyperlogger.Network.PeriodicWorker;
-import com.babbangona.hyperlogger.Network.SyncController;
+import com.babbangona.hyperlogger.data.AppDatabase;
+import com.babbangona.hyperlogger.data.room.entities.GeneralLogsTable;
+import com.babbangona.hyperlogger.data.room.entities.LogsTable;
+import com.babbangona.hyperlogger.data.sharedprefs.SharedPrefs;
+import com.babbangona.hyperlogger.network.PeriodicWorker;
+import com.babbangona.hyperlogger.network.SyncController;
 
 import org.json.JSONObject;
 
@@ -30,7 +30,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
-//this model class implements the functions in the interface class
+//This model class implements the functions in the interface class
 public class LogRecords implements LogRecordsHelper {
 
     MixPanelActivator mixPanelActivator;
@@ -40,23 +40,20 @@ public class LogRecords implements LogRecordsHelper {
      * After using this constructor in your first activity/home page of your app, for subsequent activities,
      * just call the empty constructor {@link #LogRecords()}
      *
-     * @param context      context from the application
-     * @param staff_id     staff_id of the logged in user of the application
-     * @param token        mix-panel token
-     * @param endpoint_url url to the specific endpoint created for the hyperlogger library in your application's endpoints.
+     * @param context  context from the application
+     * @param staff_id staff_id of the logged in user of the application
+     * @param token    mix-panel token
      */
-    public LogRecords(Context context, String staff_id, String token, String endpoint_url) {
+    public LogRecords(Context context, String staff_id, String token) {
         startAutoSyncClass(context);
         SharedPrefs sharedPrefs = new SharedPrefs(context);
         sharedPrefs.setMixPanelStaffId(staff_id);
         sharedPrefs.setMixPanelToken(token);
-        sharedPrefs.setURLDetails(endpoint_url);
-        //forceSync(context);
     }
 
     /**
      * Empty constructor that can be used when initializing objects of the LogRecords class.
-     * Kindly note: If this is the first time of initializing the library, use {@link #LogRecords(Context, String, String, String)}
+     * Kindly note: If this is the first time of initializing the library, use {@link #LogRecords(Context, String, String)}
      */
     public LogRecords() {
     }
@@ -65,20 +62,23 @@ public class LogRecords implements LogRecordsHelper {
      * Capture general logs and save in the general logs table on the library's local database
      *
      * @param context     context
-     * @param log_type    user defined log type
+     * @param log_type    log type
      * @param log_message user defined log message
      * @return
      */
     @Override
-    public String captureLogs(Context context, String log_type, String log_message) {
+    public String captureGeneralLogs(Context context, LogType log_type, String log_message) {
 
         //insertion of logs for the general log tracking
         String remark;
+
         try {
-            AppLogs appLogs = new AppLogs(random() + "_" + getDate("concat"), log_type, log_message, getDate("spread"), "0");
+
+            GeneralLogsTable generalLogsTable = new GeneralLogsTable(random() + "_" + getDate("concat"), log_type.toString(), log_message, getDate("spread"), "0");
             AppDatabase appDatabase = AppDatabase.getInstance(context);
-            appDatabase.appLogsDao().insert(appLogs);
+            appDatabase.getGeneralLogsDao().insert(generalLogsTable);
             remark = outputRemark(1, "", context);
+
         } catch (Exception e) {
             e.printStackTrace();
             remark = outputRemark(0, e.toString() + "", context);
@@ -93,7 +93,7 @@ public class LogRecords implements LogRecordsHelper {
      * Capture audit logs and save in the audit logs table on the library's local database.
      *
      * @param context             context
-     * @param log_type            user defined log type
+     * @param log_type            log type
      * @param log_message         user defined log message
      * @param tag                 user defined tag
      * @param phone_name          mobile device's model name
@@ -105,7 +105,7 @@ public class LogRecords implements LogRecordsHelper {
      * @return
      */
     @Override
-    public String captureAuditLogs(Context context, String log_type, String log_message, String tag,
+    public String captureAuditLogs(Context context, LogType log_type, String log_message, String tag,
                                    String phone_name, String imei, String staff_id, String application_name,
                                    String application_version, String time_stamp) {
 
@@ -113,10 +113,12 @@ public class LogRecords implements LogRecordsHelper {
         String remark;
         try {
             RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
-            HyperLoggerTable hyperLoggerTable = new HyperLoggerTable(random() + "_" + getDate("concat"), log_type, log_message, tag, phone_name,imei,staff_id,
-                    application_name,application_version,getDate("spread"),"0",runTimeMemoryParameters.getRamUtilization(),runTimeMemoryParameters.getMemoryUsage());
-            AppDatabase appDatabase =  AppDatabase.getInstance(context);
-            appDatabase.hyperLoggerDao().insert(hyperLoggerTable);
+            LogsTable logsTable = new LogsTable(random() + "_" + getDate("concat"), log_type.toString(), log_message, tag, phone_name, imei, staff_id,
+                    application_name, application_version, getDate("spread"), "0", runTimeMemoryParameters.getRamUtilization(), runTimeMemoryParameters.getMemoryUsage());
+
+            AppDatabase appDatabase = AppDatabase.getInstance(context);
+            appDatabase.getLogsDao().insert(logsTable);
+
             remark = outputRemark(1, "", context);
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,7 +141,7 @@ public class LogRecords implements LogRecordsHelper {
 
         //get log count from the table on the general log count
         AppDatabase appDatabase = AppDatabase.getInstance(context);
-        return appDatabase.appLogsDao().countActivities();
+        return appDatabase.getGeneralLogsDao().countActivities();
 
     }
 
@@ -163,12 +165,12 @@ public class LogRecords implements LogRecordsHelper {
 
         //this block of code handles writing the logs to files
         //TODO enable permission for storage so the library does not crash the application
-        List<AppLogs> appLogs = AppDatabase.getInstance(context).appLogsDao().getAllRecords();
+        List<GeneralLogsTable> appLogs = AppDatabase.getInstance(context).getGeneralLogsDao().getAllRecords();
         ArrayList<String> logs = new ArrayList<>();
 
 
-        for (AppLogs mLogs: appLogs){
-            logs.add("Log entry: "+mLogs.getLog_id()+" " + mLogs.getLog_type() + " " + mLogs.getLog_message() + " " + mLogs.getSync_flag() + " " + mLogs.getTime_stamp() + "\n");
+        for (GeneralLogsTable mLogs : appLogs) {
+            logs.add("Log entry: " + mLogs.getLog_id() + " " + mLogs.getLog_type() + " " + mLogs.getLog_message() + " " + mLogs.getSync_flag() + " " + mLogs.getTime_stamp() + "\n");
         }
 
         //function writing to external storage
@@ -264,18 +266,12 @@ public class LogRecords implements LogRecordsHelper {
         mixPanelActivator.mixPanelTracking(tracking_title);
     }
 
-    /*@Override
-    public String getCPULoads() {
-        RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
-        return runTimeMemoryParameters.getCPULoadComposer();
-    }*/
-
     private void forceSync(Context context) {
 
         //String message = generateMessage();
         SharedPrefs sharedPrefs = new SharedPrefs(context);
         if (sharedPrefs.getSyncTrigger() == 1) {
-            new SyncController(context).uploadLogs();
+            new SyncController(context).uploadGeneralLogs();
         }
     }
 

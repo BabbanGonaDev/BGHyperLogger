@@ -2,7 +2,7 @@ package com.babbangona.hyperlogger;
 
 import android.content.Context;
 
-import com.babbangona.hyperlogger.Database.sharedprefs.SharedPrefs;
+import com.babbangona.hyperlogger.data.sharedprefs.SharedPrefs;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONObject;
@@ -36,7 +36,7 @@ public class MixPanelActivator {
         } catch (Exception e) {
             e.printStackTrace();
             LogRecords logRecords = new LogRecords();
-            logRecords.captureLogs(context, "Library failure", "Mix Panel Failed " + e.toString());
+            logRecords.captureGeneralLogs(context, LogType.ERROR, "Mix Panel Failed " + e.toString());
         }
     }
 
@@ -53,7 +53,6 @@ public class MixPanelActivator {
     }
 
     private void setMixPanelProperties(){
-
         mix_panel.getPeople().identify(sharedPrefs.getMixPanelStaffId());
         mix_panel.getPeople().set("$staff_id", sharedPrefs.getMixPanelStaffId());
     }

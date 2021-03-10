@@ -1,4 +1,4 @@
-package com.babbangona.hyperlogger.Database.sharedprefs;
+package com.babbangona.hyperlogger.data.sharedprefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,11 +16,9 @@ public class SharedPrefs {
     int PRIVATE_MODE = 0;
 
     //TO-DO: CHANGE THIS TO YOUR SHARED PREFS NEED
-    private static final String PREF_NAME = "BG_H_Logger_Prefs";
-
+    private static final String PREF_NAME = "Hyperlogger Preferences";
 
     //TODO: CHANGE THESE TO THE SPECIFIED STRINGS YOU NEED
-    public static final String BASE_URL = "base_url";
     public static final String BASE_SCRIPT = "base_script";
     public static final String SYNC_FLAG = "sync_flag";
 
@@ -28,21 +26,11 @@ public class SharedPrefs {
     public static final String MIX_PANEL_STAFF_ID = "mix_panel_staff_id";
     public static final String MIX_PANEL_TOKEN = "mix_panel_staff_token";
 
-
-
-
     // Constructor
     public SharedPrefs(Context context){
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
-    }
-
-
-
-    public void setURLDetails(String url){
-        editor.putString(BASE_URL, url);
-        editor.commit();
     }
 
     public void setMixPanelToken(String token){
@@ -68,14 +56,7 @@ public class SharedPrefs {
         return pref.getString(MIX_PANEL_STAFF_ID, "T-1000000000000LOG");
     }
 
-    public String getBaseUrl(){
-        return pref.getString(BASE_URL, "https://mobileapps.testenvironmentbg.com/hyperlogger_api/public/api/v1/");
-    }
-
     public String getMixPanelToken(){
         return pref.getString(MIX_PANEL_TOKEN, "de8d61ea252990ca1b6aef60b3220afc");
     }
-
-
-
 }

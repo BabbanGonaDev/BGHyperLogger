@@ -1,35 +1,21 @@
-package com.babbangona.hyperlogger.Database.Entities;
+package com.babbangona.hyperlogger.data.room.entities;
 
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-import com.babbangona.hyperlogger.Database.DatabaseStringConstants;
 
+@Entity(tableName = "general_logs_table")
+public class GeneralLogsTable {
 
-@Entity(primaryKeys = {DatabaseStringConstants.COL_LOG_ID},
-        tableName = DatabaseStringConstants.GENERAL_LOG_TABLE)
-public class AppLogs {
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_LOG_ID)
     @NonNull
     private String log_id;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_LOG_TYPE)
     private String log_type;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_LOG_MESSAGE)
     private String log_message;
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_TIME_STAMP)
     private String time_stamp;
-
-
-    @ColumnInfo(name = DatabaseStringConstants.COL_SYNC_FLAG)
     private String sync_flag;
 
-    public AppLogs(@NonNull String log_id, String log_type, String log_message, String time_stamp, String sync_flag) {
+    public GeneralLogsTable(@NonNull String log_id, String log_type, String log_message, String time_stamp, String sync_flag) {
         this.log_id = log_id;
         this.log_type = log_type;
         this.log_message = log_message;

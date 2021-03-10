@@ -1,4 +1,4 @@
-package com.babbangona.hyperlogger.Network;
+package com.babbangona.hyperlogger.network;
 
 import android.app.Service;
 import android.content.Intent;
@@ -29,7 +29,7 @@ public class NotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         //String message = generateMessage();
 
-        new SyncController(getApplicationContext()).uploadLogs();
+        new SyncController(getApplicationContext()).uploadGeneralLogs();
         stopSelf();
 
         return START_STICKY;
