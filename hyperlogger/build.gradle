@@ -2,6 +2,12 @@ plugins {
     id 'com.android.library'
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+def keystoreProperties = new Properties()
+
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
@@ -16,11 +22,17 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField "String", "MIX_PANEL_TOKEN", '"85cf8c93917ea8c755edbc2767a180b8"'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "MIX_PANEL_TOKEN", '"85cf8c93917ea8c755edbc2767a180b8"'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

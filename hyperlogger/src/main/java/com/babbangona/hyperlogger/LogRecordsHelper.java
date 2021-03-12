@@ -13,14 +13,14 @@ public interface LogRecordsHelper {
      */
     String captureAuditLogs(Context context, LogType log_type, String log_message, String tag, String phone_name,
                             String imei, String staff_id, String application_name, String application_version,
-                            String time_stamp);
+                            String package_name, String time_stamp);
 
 
     /**
      * This method handles all the general logs on the application
      * it requires the consumer providing the context and then every other data point in this function
      */
-    String captureGeneralLogs(Context context, LogType log_type, String log_message);
+    String captureGeneralLogs(Context context, LogType log_type, String log_message, String package_name);
 
     /**
      *this getlogs function is for debugging, it returns the count of all the logs in the table

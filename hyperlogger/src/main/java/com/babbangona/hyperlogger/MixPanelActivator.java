@@ -36,7 +36,7 @@ public class MixPanelActivator {
         } catch (Exception e) {
             e.printStackTrace();
             LogRecords logRecords = new LogRecords();
-            logRecords.captureGeneralLogs(context, LogType.ERROR, "Mix Panel Failed " + e.toString());
+            logRecords.captureGeneralLogs(context, LogType.ERROR, "Mix Panel Failed " + e.toString(), BuildConfig.LIBRARY_PACKAGE_NAME);
         }
     }
 

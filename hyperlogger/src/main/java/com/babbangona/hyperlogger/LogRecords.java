@@ -42,18 +42,17 @@ public class LogRecords implements LogRecordsHelper {
      *
      * @param context  context from the application
      * @param staff_id staff_id of the logged in user of the application
-     * @param token    mix-panel token
      */
-    public LogRecords(Context context, String staff_id, String token) {
+    public LogRecords(Context context, String staff_id) {
         startAutoSyncClass(context);
         SharedPrefs sharedPrefs = new SharedPrefs(context);
         sharedPrefs.setMixPanelStaffId(staff_id);
-        sharedPrefs.setMixPanelToken(token);
+        sharedPrefs.setMixPanelToken(BuildConfig.MIX_PANEL_TOKEN);
     }
 
     /**
      * Empty constructor that can be used when initializing objects of the LogRecords class.
-     * Kindly note: If this is the first time of initializing the library, use {@link #LogRecords(Context, String, String)}
+     * Kindly note: If this is the first time of initializing the library, use {@link #LogRecords(Context, String)}
      */
     public LogRecords() {
     }
@@ -61,20 +60,21 @@ public class LogRecords implements LogRecordsHelper {
     /**
      * Capture general logs and save in the general logs table on the library's local database
      *
-     * @param context     context
-     * @param log_type    log type
-     * @param log_message user defined log message
+     * @param context      context
+     * @param log_type     log type
+     * @param log_message  user defined log message
+     * @param package_name package name of the application
      * @return
      */
     @Override
-    public String captureGeneralLogs(Context context, LogType log_type, String log_message) {
+    public String captureGeneralLogs(Context context, LogType log_type, String log_message, String package_name) {
 
         //insertion of logs for the general log tracking
         String remark;
 
         try {
 
-            GeneralLogsTable generalLogsTable = new GeneralLogsTable(random() + "_" + getDate("concat"), log_type.toString(), log_message, getDate("spread"), "0");
+            GeneralLogsTable generalLogsTable = new GeneralLogsTable(random() + "_" + getDate("concat"), log_type.toString(), log_message, package_name, getDate("spread"), "0");
             AppDatabase appDatabase = AppDatabase.getInstance(context);
             appDatabase.getGeneralLogsDao().insert(generalLogsTable);
             remark = outputRemark(1, "", context);
@@ -101,20 +101,21 @@ public class LogRecords implements LogRecordsHelper {
      * @param staff_id            logged_in user's staff_id
      * @param application_name    name of application
      * @param application_version current version of application
+     * @param package_name        package name of the application
      * @param time_stamp
      * @return
      */
     @Override
     public String captureAuditLogs(Context context, LogType log_type, String log_message, String tag,
                                    String phone_name, String imei, String staff_id, String application_name,
-                                   String application_version, String time_stamp) {
+                                   String application_version, String package_name, String time_stamp) {
 
         //insertion of logs for the audit log tracking
         String remark;
         try {
             RunTimeMemoryParameters runTimeMemoryParameters = new RunTimeMemoryParameters();
             LogsTable logsTable = new LogsTable(random() + "_" + getDate("concat"), log_type.toString(), log_message, tag, phone_name, imei, staff_id,
-                    application_name, application_version, getDate("spread"), "0", runTimeMemoryParameters.getRamUtilization(), runTimeMemoryParameters.getMemoryUsage());
+                    application_name, application_version, package_name, runTimeMemoryParameters.getRamUtilization(), runTimeMemoryParameters.getMemoryUsage(), getDate("spread"), "0");
 
             AppDatabase appDatabase = AppDatabase.getInstance(context);
             appDatabase.getLogsDao().insert(logsTable);
