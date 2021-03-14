@@ -1,5 +1,5 @@
 # BGHyperLogger
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/BabbanGonaDev/BGHyperLogger?include_prereleases&label=Latest%20Release)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/BabbanGonaDev/BGHyperLogger?include_prereleases)
 ![GitHub contributors](https://img.shields.io/github/contributors/BabbanGonaDev/BGHyperLogger)
 ![GitHub last commit](https://img.shields.io/github/last-commit/BabbanGonaDev/BGHyperLogger)
 ![GitHub top language](https://img.shields.io/github/languages/top/BabbanGonaDev/BGHyperLogger)
