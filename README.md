@@ -79,6 +79,11 @@ try {
 logger.mixPanelTracker("User purchased a new song", obj, this);
 ```
 
+**Always remember to trigger sync by calling:** 
+```java
+logger.triggerSync(this, 1);
+```
+
 ## Example
 ---------------------------
 For more understanding and examples, a sample implementation can be found [here](https://github.com/BabbanGonaDev/BGHyperLogger/tree/master/sample)
