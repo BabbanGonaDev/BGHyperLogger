@@ -1,4 +1,4 @@
-package com.babbangona.hyperlogger.data.realm;
+package com.babbangona.hyperlogger.data.realm.model;
 
 import com.babbangona.hyperlogger.LogType;
 
@@ -6,11 +6,13 @@ import java.util.UUID;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
+@RealmClass(name = "logs")
 public class Logs extends RealmObject {
 
     @PrimaryKey
-    private String unique_id;
+    private String unique_id = UUID.randomUUID().toString();
     private String session_id;
     private LogType log_type;
     private String log_name;
@@ -18,9 +20,10 @@ public class Logs extends RealmObject {
     private String build_type;
     private String app_version;
     private String timestamp;
+    private int sync_flag;
 
-    public Logs(String session_id, LogType log_type, String log_name, String log_message, String build_type, String app_version, String timestamp) {
-        this.unique_id = UUID.randomUUID().toString();
+    public Logs(String unique_id, String session_id, LogType log_type, String log_name, String log_message, String build_type, String app_version, String timestamp, int sync_flag) {
+        this.unique_id = unique_id;
         this.session_id = session_id;
         this.log_type = log_type;
         this.log_name = log_name;
@@ -28,7 +31,10 @@ public class Logs extends RealmObject {
         this.build_type = build_type;
         this.app_version = app_version;
         this.timestamp = timestamp;
+        this.sync_flag = sync_flag;
     }
+
+    public Logs() {}
 
     public String getUnique_id() {
         return unique_id;
@@ -92,5 +98,13 @@ public class Logs extends RealmObject {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public int getSync_flag() {
+        return sync_flag;
+    }
+
+    public void setSync_flag(int sync_flag) {
+        this.sync_flag = sync_flag;
     }
 }

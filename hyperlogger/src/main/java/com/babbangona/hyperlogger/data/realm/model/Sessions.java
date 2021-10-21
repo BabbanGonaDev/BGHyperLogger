@@ -1,11 +1,15 @@
-package com.babbangona.hyperlogger.data.realm;
+package com.babbangona.hyperlogger.data.realm.model;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
+@RealmClass(name = "sessions")
 public class Sessions extends RealmObject {
 
     @PrimaryKey
+    @Required
     private String session_id;
     private String staff_id;
     private String session_start;
@@ -25,6 +29,8 @@ public class Sessions extends RealmObject {
         this.os_version = os_version;
         this.manufacturer = manufacturer;
     }
+
+    public Sessions() {}
 
     public String getSession_id() {
         return session_id;

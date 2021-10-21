@@ -9,6 +9,8 @@ import com.babbangona.hyperlogger.data.sharedprefs.SharedPrefs;
 
 import java.util.Objects;
 
+import io.realm.Realm;
+
 public class Logger {
     Application application;
     private String staffId;
@@ -23,6 +25,7 @@ public class Logger {
 
     private SharedPrefs prefs;
     private Activity currentActivity;
+    private static Realm db;
 
     /*
     - Design a system that depends on the context of every activity. That is, they have to call "Hyperlogger.init(this)" inside every activity in order to use it's functions.
@@ -66,6 +69,7 @@ public class Logger {
             throw new RuntimeException("Hyperlogger is not initialized");
         }
 
+        db = Realm.getDefaultInstance();
         return new Logger(activity);
     }
 
@@ -89,6 +93,10 @@ public class Logger {
 
     public void info(String message) {
 
+    }
+
+    public void insertLog(){
+        db.executeTransactionAsync()
     }
 
     //Builder class
