@@ -5,14 +5,18 @@ import android.app.Application;
 import android.os.Build;
 import android.util.Log;
 
+import com.babbangona.hyperlogger.data.realm.HyperloggerDb;
+import com.babbangona.hyperlogger.data.realm.model.Logs;
 import com.babbangona.hyperlogger.data.sharedprefs.SharedPrefs;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
-
-import io.realm.Realm;
 
 public class Logger {
     Application application;
+
     private String staffId;
     private String appVersion;
     private String sessionId;
@@ -25,7 +29,7 @@ public class Logger {
 
     private SharedPrefs prefs;
     private Activity currentActivity;
-    private static Realm db;
+    private static HyperloggerDb db;
 
     /*
     - Design a system that depends on the context of every activity. That is, they have to call "Hyperlogger.init(this)" inside every activity in order to use it's functions.
@@ -43,6 +47,11 @@ public class Logger {
             this.buildType = builder.buildType;
             this.application = builder.application;
 
+            //Confirm variables
+            Log.d("CHECK", "StaffID: " + staffId);
+            Log.d("CHECK", "Session ID: " + sessionId);
+            Log.d("CHECK", "Build Type: " + buildType);
+
             //Save variables to sharedPrefs
             prefs = new SharedPrefs(application.getApplicationContext());
             prefs.putValue(SharedPrefs.STAFF_ID, staffId);
@@ -52,6 +61,7 @@ public class Logger {
             prefs.putValue(SharedPrefs.OS_VERSION, deviceOsVersion);
             prefs.putValue(SharedPrefs.DEVICE_MANUFACTURER, deviceManufacturer);
             prefs.putValue(SharedPrefs.DEVICE_NAME, deviceName);
+            prefs.putValue(SharedPrefs.BUILD_TYPE, buildType);
 
             //Set a boolean variable to confirm that the build has been initialized
             Logger.isInitialized = true;
@@ -69,34 +79,100 @@ public class Logger {
             throw new RuntimeException("Hyperlogger is not initialized");
         }
 
-        db = Realm.getDefaultInstance();
+        db = new HyperloggerDb(activity);
+        db.open();
+
         return new Logger(activity);
     }
 
     /**
-     * Used to log debug messages to the database
+     * Used to log debug messages
+     *
+     * @param message
      */
     public void debug(String message) {
-        if (buildType.equals("debug"))
+        if (buildType == "debug")
             Log.d(currentActivity.getLocalClassName(), message);
 
-        //TODO: Save log to database.
+        insertLog(message, LogType.DEBUG);
     }
 
+    /**
+     * Used to log error messages
+     *
+     * @param message
+     */
     public void error(String message) {
+        if (buildType == "debug")
+            Log.d(currentActivity.getLocalClassName(), message);
 
+        insertLog(message, LogType.ERROR);
     }
 
+    /**
+     * Used to log warnings
+     *
+     * @param message
+     */
     public void warn(String message) {
+        if (buildType == "debug")
+            Log.d(currentActivity.getLocalClassName(), message);
 
+        insertLog(message, LogType.WARN);
     }
 
+    /**
+     * Used to log actions
+     *
+     * @param message
+     */
+    public void action(String message) {
+        insertLog(message, LogType.ACTION);
+    }
+
+    /**
+     * Used to log caught exceptions
+     *
+     * @param message
+     */
+    public void exception(String message) {
+        insertLog(message, LogType.EXCEPTION);
+    }
+
+    /**
+     * Used to log network actions.
+     *
+     * @param message
+     */
+    public void network(String message) {
+        insertLog(message, LogType.NETWORK);
+    }
+
+    /**
+     * Used to log information
+     *
+     * @param message
+     */
     public void info(String message) {
+        if (buildType == "debug")
+            Log.d(currentActivity.getLocalClassName(), message);
 
+        insertLog(message, LogType.INFO);
     }
 
-    public void insertLog(){
-        db.executeTransactionAsync()
+    public void insertLog(String message, LogType logType) {
+        prefs = new SharedPrefs(currentActivity);
+
+        Logs _log = new Logs(prefs.getValue(String.class, SharedPrefs.SESSION_ID),
+                logType.name(),
+                "",
+                message,
+                prefs.getValue(String.class, SharedPrefs.BUILD_TYPE),
+                prefs.getValue(String.class, SharedPrefs.APP_VERSION),
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()),
+                0);
+
+        db.addLogs(_log);
     }
 
     //Builder class

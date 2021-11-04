@@ -1,7 +1,5 @@
 package com.babbangona.hyperlogger.data.realm.model;
 
-import com.babbangona.hyperlogger.LogType;
-
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -12,9 +10,9 @@ import io.realm.annotations.RealmClass;
 public class Logs extends RealmObject {
 
     @PrimaryKey
-    private String unique_id = UUID.randomUUID().toString();
+    private String unique_id;
     private String session_id;
-    private LogType log_type;
+    private String log_type;
     private String log_name;
     private String log_message;
     private String build_type;
@@ -22,8 +20,8 @@ public class Logs extends RealmObject {
     private String timestamp;
     private int sync_flag;
 
-    public Logs(String unique_id, String session_id, LogType log_type, String log_name, String log_message, String build_type, String app_version, String timestamp, int sync_flag) {
-        this.unique_id = unique_id;
+    public Logs(String session_id, String log_type, String log_name, String log_message, String build_type, String app_version, String timestamp, int sync_flag) {
+        this.unique_id = UUID.randomUUID().toString();
         this.session_id = session_id;
         this.log_type = log_type;
         this.log_name = log_name;
@@ -52,11 +50,11 @@ public class Logs extends RealmObject {
         this.session_id = session_id;
     }
 
-    public LogType getLog_type() {
+    public String getLog_type() {
         return log_type;
     }
 
-    public void setLog_type(LogType log_type) {
+    public void setLog_type(String log_type) {
         this.log_type = log_type;
     }
 

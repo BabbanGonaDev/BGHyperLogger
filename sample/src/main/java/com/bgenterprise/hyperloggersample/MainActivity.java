@@ -17,14 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        Logger x = new Logger.Builder(getApplication())
-                .setStaffId("JAB")
-                .setAppVersion("afe")
-                .setBuildType(BuildConfig.BUILD_TYPE)
-                .startSession();
-
-        logger = Logger.getInstance(MainActivity.this);
-        logger.debug("This is a debug message");
+        binding.btnGeneralLog.setOnClickListener(v -> {
+            logger = Logger.getInstance(MainActivity.this);
+            logger.debug("This is a debug message");
+        });
 
     }
 }

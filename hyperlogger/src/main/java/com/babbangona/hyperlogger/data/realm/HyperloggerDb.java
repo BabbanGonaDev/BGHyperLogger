@@ -1,6 +1,9 @@
 package com.babbangona.hyperlogger.data.realm;
 
+import android.content.Context;
+
 import com.babbangona.hyperlogger.data.realm.model.Logs;
+import com.babbangona.hyperlogger.data.realm.model.Sessions;
 import com.babbangona.hyperlogger.data.realm.module.AllTablesModule;
 
 import io.realm.Realm;
@@ -14,45 +17,44 @@ import io.realm.RealmResults;
 public class HyperloggerDb {
 
     private final RealmConfiguration realmConfig;
-    private Realm realm;
+    private static Realm realm;
 
-    public HyperloggerDb() {
+    public HyperloggerDb(Context context) {
+        Realm.init(context);
+
         realmConfig = new RealmConfiguration.Builder()
                 .name("hyperlogger.realm")
                 .modules(new AllTablesModule())
                 .build();
     }
 
-    public void open(){
+    public void open() {
         // Don't use Realm.setDefaultInstance() in library projects. It is unsafe as app developers can override the
         // default configuration. So always use explicit configurations in library projects.
-        realm = Realm.getInstance(realmConfig);
+
+        if (realm == null) {
+            realm = Realm.getInstance(realmConfig);
+        }
+
     }
 
-    public void close(){
+    public void close() {
         realm.close();
     }
 
-    public RealmResults<Logs> getUnSyncedLogs(){
-        return realm.where(Logs.class).equalTo("sync_flag", 0).findAll();
+    public RealmResults<Logs> getUnSyncedLogs() {
+        return realm.where(Logs.class).equalTo("sync_flag", 0).findAllAsync();
     }
 
-    public void addLogs(Logs log){
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
+    public RealmResults<Sessions> getUnSyncedSessions() {
+        return realm.where(Sessions.class).equalTo("sync_flag", 0).findAllAsync();
+    }
 
-            }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
+    public void addLogs(Logs userLog) {
+        realm.executeTransactionAsync(realm -> {
 
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
+            realm.copyToRealm(userLog);
 
-            }
         });
     }
 }

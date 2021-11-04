@@ -31,6 +31,7 @@ public class SharedPrefs {
     public static final String OS_VERSION = "os_version";
     public static final String DEVICE_MANUFACTURER = "device_manufacturer";
     public static final String DEVICE_NAME = "device_name";
+    public static final String BUILD_TYPE = "build_type";
 
     // Constructor
     public SharedPrefs(Context context) {

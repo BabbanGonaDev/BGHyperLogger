@@ -9,6 +9,7 @@ package com.babbangona.hyperlogger;
 public enum LogType {
     ACTION,
     CRASH,
+    DEBUG,
     EXCEPTION,
     ERROR,
     INFO,
